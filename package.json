@@ -1,0 +1,101 @@
+{
+  "name": "markdownify",
+  "description": "A Markdown viewer.",
+  "version": "0.2.0",
+  "private": true,
+  "main": "main.js",
+  "homepage": "./",
+  "author": "Sem Postma",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --publish onTagOrDraft",
+    "electron": "electron .",
+    "postinstall": "electron-builder install-app-deps",
+    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build",
+    "electron-dev": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
+    "analyze": "source-map-explorer build/static/js/*.js"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "classnames": "^2.2.6",
+    "concurrently": "^4.1.0",
+    "cross-env": "^5.2.0",
+    "electron": "^5.0.0",
+    "electron-builder": "^20.39.0",
+    "electron-is-dev": "^1.1.0",
+    "gh-pages": "^2.0.1",
+    "github-markdown-css": "^3.0.1",
+    "office-ui-fabric-react": "^6.188.2",
+    "pretty-bytes": "^5.2.0",
+    "query-string": "^6.4.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-markdown": "^4.0.8",
+    "react-scripts": "3.0.0",
+    "wait-on": "^3.2.0"
+  },
+  "build": {
+    "extends": null,
+    "appId": "com.ESStudio.Markdownify",
+    "directories": {
+      "buildResources": "public"
+    },
+    "win": {
+      "target": [
+        "portable",
+        "nsis",
+        "appx",
+        "zip"
+      ],
+      "icon": "public/icon.png",
+      "publish": [
+        {
+          "provider": "github",
+          "repo": "markdownify",
+          "owner": "LesterGallagher",
+          "publishAutoUpdate": true
+        }
+      ]
+    },
+    "appx": {
+      "applicationId": "markdownify",
+      "identityName": "32415ESStudio.Markdownify",
+      "backgroundColor": "#ffffff",
+      "displayName": "Markdownify",
+      "publisher": "CN=BD184AA1-66C8-45BE-87E1-3209E1C18536",
+      "publisherDisplayName": "ESStudio"
+    },
+    "files": [
+      "**/*",
+      "!dist",
+      "!src"
+    ]
+  },
+  "dependencies": {
+    "custom-electron-titlebar": "^3.0.8",
+    "electron-context-menu": "^0.12.1",
+    "electron-log": "^3.0.5",
+    "electron-updater": "^4.0.6",
+    "fs-extra": "^8.0.1",
+    "turndown": "^5.0.3"
+  }
+}
