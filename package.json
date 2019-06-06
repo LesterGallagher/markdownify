@@ -1,7 +1,7 @@
 {
   "name": "markdownify",
   "description": "A Markdown viewer.",
-  "version": "0.2.0",
+  "version": "0.2.3",
   "private": true,
   "main": "main.js",
   "homepage": "./",
@@ -73,6 +73,40 @@
           "repo": "markdownify",
           "owner": "LesterGallagher",
           "publishAutoUpdate": true
+        }
+      ],
+      "fileAssociations": [
+        {
+          "ext": [
+            "html",
+            "htm",
+            "xhtml",
+            "dhtml",
+            "phtml",
+            "jhtml",
+            "mhtml",
+            "rhtml",
+            "shtml",
+            "zhtml"
+          ],
+          "name": "HTML",
+          "role": "Viewer"
+        },
+        {
+          "ext": [
+            "markdown",
+            "mdown",
+            "mkdn",
+            "md",
+            "mkd",
+            "mdwn",
+            "mdtxt",
+            "mdtext",
+            "text",
+            "Rmd"
+          ],
+          "name": "Markdown",
+          "role": "Viewer"
         }
       ]
     },

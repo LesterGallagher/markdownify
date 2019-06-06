@@ -6,6 +6,13 @@ import App from './components/App/App';
 import * as serviceWorker from './serviceWorker';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
 
+var customTitlebar = window.require('custom-electron-titlebar');
+
+new customTitlebar.Titlebar({
+    backgroundColor: customTitlebar.Color.fromHex('#0078d4'),
+    icon: 'custom-icon.png',
+});
+
 initializeIcons();
 
 ReactDOM.render(<App />, document.getElementById('root'));

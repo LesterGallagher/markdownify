@@ -4,7 +4,9 @@ const log = require('electron-log');
 const { autoUpdater } = require("electron-updater");
 const isDev = require('electron-is-dev');
 const { createMenu } = require('./menu');
+const { openFile } = require('./files');
 require('./contextmenu');
+const fs = require('fs-extra');
 
 autoUpdater.checkForUpdatesAndNotify()
 autoUpdater.logger = log;
@@ -14,12 +16,37 @@ log.info('App starting...');
 ipcMain.on('save', async (event, arg) => {
     const { id } = arg;
     event.sender.send('save-response', { id });
-})
-
+});
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
+
+
+ipcMain.on('get-opened-file-data', async event => {
+    // get file path to file which was opened with markdownify
+    if (process.platform === 'win32' && process.argv.length >= 2) {
+        const filename = process.argv[1];
+
+        if ((await fs.exists(filename)) === false) return;
+
+        if ((await fs.stat(filename)).isFile() === false) return;
+
+        console.log('opening file', filename);
+        await openFile(win, filename);
+    }
+});
+
+ipcMain.on('open-file', async (event, { filename }) => {
+    // get file path to file which was opened with markdownify
+
+    if ((await fs.exists(filename)) === false) return;
+
+    if ((await fs.stat(filename)).isFile() === false) return;
+
+    console.log('opening file', filename);
+    await openFile(win, filename);
+});
 
 function createWindow() {
     // Create the browser window.
@@ -29,7 +56,7 @@ function createWindow() {
         icon: path.join(__dirname, 'public/icon.png'),
         show: false,
         frame: false,
-        backgroundColor: '#fff',
+        backgroundColor: '#ffffff',
         webPreferences: {
             nodeIntegration: true
         }
@@ -38,14 +65,14 @@ function createWindow() {
     const { webContents } = win;
 
     var handleRedirect = (e, url) => {
-        if (url != webContents.getURL()) {
+        if (url !== webContents.getURL()) {
             e.preventDefault();
             shell.openExternal(url);
         }
     }
-    
-    webContents.on('will-navigate', handleRedirect)
-    webContents.on('new-window', handleRedirect)
+
+    webContents.on('will-navigate', handleRedirect);
+    webContents.on('new-window', handleRedirect);
 
     createMenu(win);
 
@@ -65,7 +92,7 @@ function createWindow() {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
-        win = null
+        win = null;
     });
 }
 
