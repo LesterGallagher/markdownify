@@ -53,8 +53,11 @@ class App extends Component {
     ipcRenderer.on('app-state-change', this.handleIpcStateChange);
     ipcRenderer.send('get-opened-file-data');
     const state = await db.get('state');
-    this.setState(state && state.markdown ? state : { markdown: '## Hello World' });
-    console.log(this.ref);
+    if (state && state.markdown) {
+      this.setState(state);
+    } else {
+      ipcRenderer.send('load-default-file');
+    }
 
   }
 
@@ -63,7 +66,6 @@ class App extends Component {
   }
 
   handleIpcStateChange = (event, args) => {
-    console.log(args);
     this.setState(args);
     const { markdown } = args;
     if (markdown) {
@@ -75,14 +77,9 @@ class App extends Component {
 
   handleDragOver = e => {
     e.preventDefault();
-    console.log('drag over');
   }
 
   handleDrop = e => {
-    console.log(e);
-
-    console.log('drop');
-
     if (e.dataTransfer.files.length > 1) {
       this.setState({ hideOnlyOneFileDialog: false });
       return;
@@ -92,8 +89,6 @@ class App extends Component {
     const filename = file.path;
 
     ipcRenderer.send('open-file', { filename });
-
-    console.log(file);
   }
 
   render = () => {

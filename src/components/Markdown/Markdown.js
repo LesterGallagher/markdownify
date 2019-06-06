@@ -37,7 +37,6 @@ class Markdown extends Component {
     }
 
     render = () => {
-        console.log(this.props.children)
         return (
             <div className={styles.container}>
                 <ReactMarkdown className="markdown-body" transformImageUri={this.transformImageUri} transformLinkUri={this.transformLinkUri}>{this.props.children}</ReactMarkdown>

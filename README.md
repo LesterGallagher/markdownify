@@ -1,9 +1,11 @@
 
 # Markownify
 
-![Thumbnail](data:image/svg+xml;base64,PHN2ZyBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogIzAwNzhkNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iLTEwIC0xMCAyMjggMTQ4Ij48cmVjdCB3aWR0aD0iMTk4IiBoZWlnaHQ9IjExOCIgeD0iNSIgeT0iNSIgcnk9IjEwIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMTAiIGZpbGw9Im5vbmUiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMzAgOThWMzBoMjBsMjAgMjUgMjAtMjVoMjB2NjhIOTBWNTlMNzAgODQgNTAgNTl2Mzl6bTEyNSAwbC0zMC0zM2gyMFYzMGgyMHYzNWgyMHoiLz48IS0tIENvZGUgaW5qZWN0ZWQgYnkgbGl2ZS1zZXJ2ZXIgLS0+CjxzY3JpcHQgdHlwZT0idGV4dC9qYXZhc2NyaXB0Ij4KCS8vIDwhW0NEQVRBWyAgPC0tIEZvciBTVkcgc3VwcG9ydAoJaWYgKCdXZWJTb2NrZXQnIGluIHdpbmRvdykgewoJCShmdW5jdGlvbiAoKSB7CgkJCWZ1bmN0aW9uIHJlZnJlc2hDU1MoKSB7CgkJCQl2YXIgc2hlZXRzID0gW10uc2xpY2UuY2FsbChkb2N1bWVudC5nZXRFbGVtZW50c0J5VGFnTmFtZSgibGluayIpKTsKCQkJCXZhciBoZWFkID0gZG9jdW1lbnQuZ2V0RWxlbWVudHNCeVRhZ05hbWUoImhlYWQiKVswXTsKCQkJCWZvciAodmFyIGkgPSAwOyBpIDwgc2hlZXRzLmxlbmd0aDsgKytpKSB7CgkJCQkJdmFyIGVsZW0gPSBzaGVldHNbaV07CgkJCQkJdmFyIHBhcmVudCA9IGVsZW0ucGFyZW50RWxlbWVudCB8fCBoZWFkOwoJCQkJCXBhcmVudC5yZW1vdmVDaGlsZChlbGVtKTsKCQkJCQl2YXIgcmVsID0gZWxlbS5yZWw7CgkJCQkJaWYgKGVsZW0uaHJlZiAmJiB0eXBlb2YgcmVsICE9ICJzdHJpbmciIHx8IHJlbC5sZW5ndGggPT0gMCB8fCByZWwudG9Mb3dlckNhc2UoKSA9PSAic3R5bGVzaGVldCIpIHsKCQkJCQkJdmFyIHVybCA9IGVsZW0uaHJlZi5yZXBsYWNlKC8oJnxcPylfY2FjaGVPdmVycmlkZT1cZCsvLCAnJyk7CgkJCQkJCWVsZW0uaHJlZiA9IHVybCArICh1cmwuaW5kZXhPZignPycpID49IDAgPyAnJicgOiAnPycpICsgJ19jYWNoZU92ZXJyaWRlPScgKyAobmV3IERhdGUoKS52YWx1ZU9mKCkpOwoJCQkJCX0KCQkJCQlwYXJlbnQuYXBwZW5kQ2hpbGQoZWxlbSk7CgkJCQl9CgkJCX0KCQkJdmFyIHByb3RvY29sID0gd2luZG93LmxvY2F0aW9uLnByb3RvY29sID09PSAnaHR0cDonID8gJ3dzOi8vJyA6ICd3c3M6Ly8nOwoJCQl2YXIgYWRkcmVzcyA9IHByb3RvY29sICsgd2luZG93LmxvY2F0aW9uLmhvc3QgKyB3aW5kb3cubG9jYXRpb24ucGF0aG5hbWUgKyAnL3dzJzsKCQkJdmFyIHNvY2tldCA9IG5ldyBXZWJTb2NrZXQoYWRkcmVzcyk7CgkJCXNvY2tldC5vbm1lc3NhZ2UgPSBmdW5jdGlvbiAobXNnKSB7CgkJCQlpZiAobXNnLmRhdGEgPT0gJ3JlbG9hZCcpIHdpbmRvdy5sb2NhdGlvbi5yZWxvYWQoKTsKCQkJCWVsc2UgaWYgKG1zZy5kYXRhID09ICdyZWZyZXNoY3NzJykgcmVmcmVzaENTUygpOwoJCQl9OwoJCQlpZiAoc2Vzc2lvblN0b3JhZ2UgJiYgIXNlc3Npb25TdG9yYWdlLmdldEl0ZW0oJ0lzVGhpc0ZpcnN0VGltZV9Mb2dfRnJvbV9MaXZlU2VydmVyJykpIHsKCQkJCWNvbnNvbGUubG9nKCdMaXZlIHJlbG9hZCBlbmFibGVkLicpOwoJCQkJc2Vzc2lvblN0b3JhZ2Uuc2V0SXRlbSgnSXNUaGlzRmlyc3RUaW1lX0xvZ19Gcm9tX0xpdmVTZXJ2ZXInLCB0cnVlKTsKCQkJfQoJCX0pKCk7Cgl9CgllbHNlIHsKCQljb25zb2xlLmVycm9yKCdVcGdyYWRlIHlvdXIgYnJvd3Nlci4gVGhpcyBCcm93c2VyIGlzIE5PVCBzdXBwb3J0ZWQgV2ViU29ja2V0IGZvciBMaXZlLVJlbG9hZGluZy4nKTsKCX0KCS8vIF1dPgo8L3NjcmlwdD48L3N2Zz4=)
+![Thumbnail](https://cdn.jsdelivr.net/gh/LesterGallagher/markdownify/public/logo.svg)
 
-Markdownify is simple and effective markdown viewer. You can open any file in the markdown format and start viewing. Markdownify can also view HTML files.
+Markdownify is a simple and effective markdown/text file viewer. You can open any file in the markdown format. Markdownify can also view HTML files.
+
+Click "File"->"Open" button in the toolbar to open files. You can also drag files into the app. 
 
 ## File Associations
 
@@ -35,13 +37,38 @@ Markdownify is simple and effective markdown viewer. You can open any file in th
 
 ## Contact
 
+website: [https://esstudio.site](https://esstudio.site)
+
 email: [markdownify@esstudio.site](markdownify@esstudio.site)
 
 form: [https://esstudio.site/contact](https://esstudio.site/contact)
 
 twitter: [https://twitter.com/esstudio_site](https://twitter.com/esstudio_site)
 
+## Blog
 
+[![Open in Newsfeeder](https://imgur.com/DZxHWmv.png)](https://newsfeeder.esstudio.site/?feed=https://esstudio.site/feed.xml)
 
+[https://esstudio.site/blog](https://esstudio.site/blog)
 
+## Other
 
+![Followers](https://img.shields.io/github/followers/LesterGallagher.svg?style=social)
+
+![Forks](https://img.shields.io/github/forks/LesterGallagher/markdownify.svg?style=social)
+
+![Stars](https://img.shields.io/github/stars/LesterGallagher/markdownify.svg?style=social)
+
+![Watchers](https://img.shields.io/github/watchers/LesterGallagher/markdownify.svg?style=social)
+
+![Twitter Follow](https://img.shields.io/twitter/follow/esstudio_site.svg?style=social)
+
+## Copyright
+
+Copyright © 2019 Sem Postma. 
+
+All rights reserved. No part of this software may be reproduced, distributed, or transmitted in any form or by any means without the prior written permission of the publisher, except certain noncommercial uses permitted by copyright law. For permission requests, contact the copyright holder.
+
+copyright@esstudio.site
+https://github.com/LesterGallagher
+https://esstudio.site/contact

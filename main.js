@@ -48,6 +48,13 @@ ipcMain.on('open-file', async (event, { filename }) => {
     await openFile(win, filename);
 });
 
+ipcMain.on('load-default-file', async event => {
+    const filename = path.join(__dirname, 'README.md');
+    const buffer = await fs.readFile(filename);
+    const markdown = buffer.toString();
+    win.webContents.send('load-file-as-markdown', { filename, markdown });
+});
+
 function createWindow() {
     // Create the browser window.
     win = new BrowserWindow({
