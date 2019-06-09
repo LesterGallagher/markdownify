@@ -1,7 +1,7 @@
 {
   "name": "markdownify",
   "description": "Markdownify is a simple and effective markdown/text file viewer. You can open any file in the markdown format. Markdownify can also view HTML files.",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "private": true,
   "main": "main.js",
   "homepage": "./",
@@ -67,7 +67,7 @@
         "appx",
         "zip"
       ],
-      "icon": "public/icon.png",
+      "icon": "icon.png",
       "publish": [
         {
           "provider": "github",
