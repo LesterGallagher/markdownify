@@ -1,7 +1,7 @@
 
 # Markownify
 
-![Thumbnail](https://cdn.jsdelivr.net/gh/LesterGallagher/markdownify/public/logo.svg)
+![Thumbnail](https://cdn.jsdelivr.net/gh/sempostma/markdownify/public/logo.svg)
 
 Markdownify is a simple and effective markdown/text file viewer. You can open any file in the markdown format. Markdownify can also view HTML files.
 
@@ -53,13 +53,13 @@ twitter: [https://twitter.com/esstudio_site](https://twitter.com/esstudio_site)
 
 ## Other
 
-![Followers](https://img.shields.io/github/followers/LesterGallagher.svg?style=social)
+![Followers](https://img.shields.io/github/followers/sempostma.svg?style=social)
 
-![Forks](https://img.shields.io/github/forks/LesterGallagher/markdownify.svg?style=social)
+![Forks](https://img.shields.io/github/forks/sempostma/markdownify.svg?style=social)
 
-![Stars](https://img.shields.io/github/stars/LesterGallagher/markdownify.svg?style=social)
+![Stars](https://img.shields.io/github/stars/sempostma/markdownify.svg?style=social)
 
-![Watchers](https://img.shields.io/github/watchers/LesterGallagher/markdownify.svg?style=social)
+![Watchers](https://img.shields.io/github/watchers/sempostma/markdownify.svg?style=social)
 
 ![Twitter Follow](https://img.shields.io/twitter/follow/esstudio_site.svg?style=social)
 
@@ -70,5 +70,5 @@ Copyright © 2019 Sem Postma.
 All rights reserved. No part of this software may be reproduced, distributed, or transmitted in any form or by any means without the prior written permission of the publisher, except certain noncommercial uses permitted by copyright law. For permission requests, contact the copyright holder.
 
 copyright@esstudio.site
-https://github.com/LesterGallagher
+https://github.com/sempostma
 https://esstudio.site/contact
