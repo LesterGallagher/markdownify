@@ -1,5 +1,5 @@
 const electron = require('electron');
-const { app, BrowserWindow, Menu, dialog, ipcRenderer } = electron;
+const { app, Menu, dialog } = electron;
 const path = require('path');
 const fs = require('fs-extra');
 

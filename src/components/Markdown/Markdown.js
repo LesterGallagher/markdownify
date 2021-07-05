@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import styles from './Markdown.module.css';
-import ReactMarkdown from 'react-markdown';
-
-var { remote } = window.require('electron');
-
-const path = remote.require('path');
-const URL = remote.require('url');
+import Editor from 'rich-markdown-editor';
+import path from 'path'
+import { URL } from 'url'
 
 const INITIAL_OPTIONS = [10, 12, 14, 16, 18, 20, 22, 24, 28, 32, 40, 48, 56, 72]
     .map(fontsize => ({ key: '' + fontsize, text: '' + fontsize }));
@@ -39,7 +36,11 @@ class Markdown extends Component {
     render = () => {
         return (
             <div className={styles.container}>
-                <ReactMarkdown className="markdown-body" transformImageUri={this.transformImageUri} transformLinkUri={this.transformLinkUri}>{this.props.children}</ReactMarkdown>
+                <Editor 
+                    className="markdown-body" 
+                    transformImageUri={this.transformImageUri} 
+                    transformLinkUri={this.transformLinkUri}
+                    value={this.props.children} />
             </div>
         );
     }

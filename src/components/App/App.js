@@ -5,15 +5,8 @@ import IndexedDBStorage from '../../lib/indexeddb-wrapper';
 import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
 import { ComboBox } from 'office-ui-fabric-react/lib/ComboBox';
-import { Fabric } from 'office-ui-fabric-react/lib/index'
 
-
-var { ipcRenderer, remote } = window.require('electron');
-
-
-const fs = remote.require('fs-extra');
-const path = remote.require('path');
-const URL = remote.require('url');
+const ipcRenderer = require('electron').ipcRenderer
 
 const INITIAL_OPTIONS = [10, 12, 14, 16, 18, 20, 22, 24, 28, 32, 40, 48, 56, 72]
   .map(fontsize => ({ key: '' + fontsize, text: '' + fontsize }));
@@ -39,10 +32,7 @@ class App extends Component {
 
   }
   componentDidMount = async () => {
-    ipcRenderer.on('load-file-as-markdown', async (event, { filename }) => {
-      this.setState({ loading: true, filename, markdown: '', loadingText: 'loading file...' })
-      const buffer = await fs.readFile(filename);
-      const markdown = buffer.toString();
+    ipcRenderer.on('load-file-as-markdown', async (event, { filename, markdown }) => {
       this.setState({ loading: false, markdown, filename });
       if (markdown) {
         setTimeout(() => {

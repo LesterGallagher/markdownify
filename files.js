@@ -1,5 +1,4 @@
 const electron = require('electron');
-const { app, BrowserWindow, Menu, dialog, ipcRenderer } = electron;
 const path = require('path');
 const turndown = require('./turndown');
 const fs = require('fs-extra');
@@ -50,6 +49,9 @@ exports.openFile = async (win, filename) => {
         const buffer = await fs.readFile(filename);
         const markdown = turndown(buffer.toString());
         win.webContents.send('app-state-change', { loading: false, markdown });
+    } else {
+        const buffer = await fs.readFile(filename);
+        const markdown = buffer.toString()
+        win.webContents.send('app-state-change', { loading: false, markdown });
     }
-    win.webContents.send('load-file-as-markdown', { filename });
 }
