@@ -4,9 +4,12 @@ const log = require('electron-log');
 const { autoUpdater } = require("electron-updater");
 const isDev = require('electron-is-dev');
 const { createMenu } = require('./menu');
-const { openFile } = require('./files');
+const { openFile, currentlyOpenFile } = require('./files');
 require('./contextmenu');
 const fs = require('fs-extra');
+const http = require('http')
+const mimeTypes = require('mime-types')
+const { Readable } = require("stream")
 
 autoUpdater.checkForUpdatesAndNotify()
 autoUpdater.logger = log;
@@ -55,6 +58,17 @@ ipcMain.on('load-default-file', async event => {
     win.webContents.send('load-file-as-markdown', { filename, markdown });
 });
 
+ipcMain.on('upload-image', async (event, { filename }) => {
+    const relativeBase = currentlyOpenFile()
+    const url = path.relative(relativeBase, filename).replace(/\\\\/g, '/')
+    console.log('uploaded image', filename, url)
+    win.webContents.send('uploaded-image', { filename, url });
+})
+
+ipcMain.on('save-file', async (event, { markdown }) => {
+    await fs.writeFile(currentlyOpenFile(), markdown)
+})
+
 function createWindow() {
     // Create the browser window.
     win = new BrowserWindow({
@@ -65,7 +79,9 @@ function createWindow() {
         frame: false,
         backgroundColor: '#ffffff',
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            contextIsolation: false,
+            enableRemoteModule: true
         }
     });
 
@@ -86,8 +102,74 @@ function createWindow() {
     win.maximize();
     win.show();
 
+    const startUrl = 'file:///index.html'
+
+    protocol.interceptStreamProtocol('file', async (request, callback) => {
+        try {
+            const url = request.url.substr(8)
+            const resultPath = path.join(__dirname, 'build', url)
+            const newUrl = new URL(url, 'http://localhost:3000')
+            console.log(url, 'to', resultPath, '|', newUrl.href)
+
+            const mime = mimeTypes.lookup(request.url)
+            const isImage = mime.startsWith('image/')
+            const baseFile = currentlyOpenFile()
+
+            console.log('isImage', isImage, 'baseFile', baseFile)
+
+            if (isImage && baseFile) {
+                const dirname = path.dirname(baseFile)
+                const possiblePath = path.resolve(dirname, url)
+                console.log(possiblePath)
+                const isFile = (await fs.exists(possiblePath)) &&
+                    (await fs.stat(possiblePath)).isFile() === true
+
+                if (isFile) {
+                    callback({
+                        statusCode: 200,
+                        headers: {
+                            'content-type': mime
+                        },
+                        data: fs.createReadStream(possiblePath)
+                    })
+                    return
+                }
+            }
+
+            if (isDev) {
+                http.get(newUrl.href, response => {
+                    callback({
+                        statusCode: 200,
+                        headers: {
+                            ...response.headers
+                        },
+                        data: response
+                    })
+                })
+            } else {
+                callback({
+                    statusCode: 200,
+                    headers: {
+                        'content-type': mime
+                    },
+                    data: fs.createReadStream(resultPath)
+                })
+            }
+        } catch (err) {
+            console.error(err)
+            callback({
+                statusCode: 500,
+                headers: {
+                    'content-type': 'text/html'
+                },
+                data: Readable.from(['internal server error'])
+            })
+        }
+    }, console.error)
+
     // and load the index.html of the app.
-    win.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, './build/index.html')}`);
+    // win.loadURL(isDev ? 'http://localhost:3000/index.html' : `file://${path.join(__dirname, './build/index.html')}`);
+    win.loadURL(startUrl);
     if (isDev) {
         // Open the DevTools.
         //BrowserWindow.addDevToolsExtension('<location to your react chrome extension>');

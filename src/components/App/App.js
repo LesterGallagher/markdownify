@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import styles from './App.module.css';
 import Markdown from '../Markdown/Markdown';
-import IndexedDBStorage from '../../lib/indexeddb-wrapper';
 import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
 import { ComboBox } from 'office-ui-fabric-react/lib/ComboBox';
+import mimeTypes from 'mime-types'
 
 const ipcRenderer = require('electron').ipcRenderer
 
 const INITIAL_OPTIONS = [10, 12, 14, 16, 18, 20, 22, 24, 28, 32, 40, 48, 56, 72]
   .map(fontsize => ({ key: '' + fontsize, text: '' + fontsize }));
 
-
-const db = new IndexedDBStorage('storage');
 
 class App extends Component {
   _basicComboBox = React.createRef();
@@ -36,15 +34,15 @@ class App extends Component {
       this.setState({ loading: false, markdown, filename });
       if (markdown) {
         setTimeout(() => {
-          db.set('state', { markdown, filename });
+          localStorage.setItem('filename', filename)
         }, 180);
       }
     });
     ipcRenderer.on('app-state-change', this.handleIpcStateChange);
     ipcRenderer.send('get-opened-file-data');
-    const state = await db.get('state');
-    if (state && state.markdown) {
-      this.setState(state);
+    const filename = await window.localStorage.getItem('filename');
+    if (filename) {
+      ipcRenderer.send('open-file', { filename })
     } else {
       ipcRenderer.send('load-default-file');
     }
@@ -57,10 +55,11 @@ class App extends Component {
 
   handleIpcStateChange = (event, args) => {
     this.setState(args);
-    const { markdown } = args;
-    if (markdown) {
+    const { filename } = args;
+    console.log({ filename })
+    if (filename) {
       setTimeout(() => {
-        db.set('state', { markdown, filename: this.state.filename });
+        localStorage.setItem('filename', filename);
       }, 180);
     }
   }
@@ -77,6 +76,17 @@ class App extends Component {
 
     const file = e.dataTransfer.files[0];
     const filename = file.path;
+
+    const mime = mimeTypes.lookup(filename)
+    console.log('mime', mime)
+
+    if (mime.startsWith('video/')
+      || mime.startsWith('audio/')
+      || mime.startsWith('application/')
+      || mime.startsWith('image/')
+      || mime.startsWith('font/')) {
+      return
+    }
 
     ipcRenderer.send('open-file', { filename });
   }

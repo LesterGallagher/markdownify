@@ -1,9 +1,6 @@
-const electron = require('electron');
 const path = require('path');
 const turndown = require('./turndown');
 const fs = require('fs-extra');
-
-
 
 const markdownExtensions = exports.markdownExtensions = [
     'markdown',
@@ -40,18 +37,26 @@ const txtExtensions = exports.txtExtensions = [
     'cfg'
 ]
 
+let _currentlyOpenFile = null
+exports.currentlyOpenFile = () => _currentlyOpenFile
+
 exports.openFile = async (win, filename) => {
     const isHTML = htmlExtensions.includes(path.extname(filename).slice(1));
     const isMarkdown = markdownExtensions.includes(path.extname(filename).slice(1))
+    _currentlyOpenFile = filename
+    console.log('openFile(', filename, ')')
 
     if (isHTML) {
         win.webContents.send('app-state-change', { filename: filename, loading: true, loadingText: 'Loading html file...' });
         const buffer = await fs.readFile(filename);
         const markdown = turndown(buffer.toString());
-        win.webContents.send('app-state-change', { loading: false, markdown });
+        win.webContents.send('app-state-change', { loading: false, markdown, filename });
     } else {
+        win.webContents.send('app-state-change', { filename: filename, loading: true, loadingText: 'Loading markdown file...' });
         const buffer = await fs.readFile(filename);
         const markdown = buffer.toString()
-        win.webContents.send('app-state-change', { loading: false, markdown });
+        win.webContents.send('app-state-change', { loading: false, markdown, filename });
     }
 }
+
+

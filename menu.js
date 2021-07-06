@@ -1,12 +1,6 @@
 const electron = require('electron');
-const { app, Menu, dialog } = electron;
-const path = require('path');
-const fs = require('fs-extra');
-
-const turndown = require('./turndown');
+const { app, Menu, dialog, ipcMain } = electron;
 const { openFile, htmlExtensions, markdownExtensions, txtExtensions } = require('./files');
-
-
 
 exports.createMenu = win => {
     const menuTemplate = [
@@ -15,8 +9,8 @@ exports.createMenu = win => {
             submenu: [
                 {
                     label: 'Open',
-                    click: () => {
-                        dialog.showOpenDialog({
+                    click: async () => {
+                        const { filePaths  } = await dialog.showOpenDialog({
                             properties: ['openFile'],
                             filters: [
                                 { name: 'Markdown', extensions: markdownExtensions },
@@ -24,12 +18,17 @@ exports.createMenu = win => {
                                 { name: 'Text', extensions: txtExtensions },
                                 { name: 'All', extensions: ['*'] },
                             ]
-                        }, async (filePaths = []) => {
-                            if (filePaths.length <= 0) return;
-                            const [filename] = filePaths;
-
-                            await openFile(win, filename);                            
                         })
+                        console.log('open file', filePaths)
+                        if(filePaths.length <= 0) return;
+                        const [filename] = filePaths;
+                        await openFile(win, filename);
+                    }
+                },
+                {
+                    label: 'Save',
+                    click: () => {
+                        win.webContents.send('save');
                     }
                 },
                 {
